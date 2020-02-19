@@ -1,12 +1,14 @@
 package com.example.myapplication.adapter
 
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.model.Country
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 import kotlinx.android.synthetic.main.rv_item.view.*
 
 //class CountryListAdapter(context: Context) :
@@ -95,16 +97,22 @@ class CountryListAdapter(private var countries: List<Country>) :
     class CountryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val rv_country_item_layout = view.rv_item_layout
-        private val iv_flag = view.iv_flag
-        private val tv_country_name = view.tv_country_name
-        private val tv_country_capital_name = view.tv_country_capital_name
+        private val flag = view.iv_flag
+        private val countryName = view.tv_country_name
+        private val capitalName = view.tv_country_capital_name
 
         fun bind(item: Country) {
-            tv_country_name?.text = item.name
-            tv_country_capital_name?.text = item.capital
-            Glide.with(itemView)
-                .load(item.flag)
-                .into(iv_flag)
+            countryName?.text = item.name
+            capitalName?.text = item.capital
+            Log.d("imageimage", item.flag)
+//            Glide.with(itemView)
+//                .load(item.flag)
+//                .into(iv_flag)
+            GlideToVectorYou
+                .init()
+                .with(itemView.context)
+                .setPlaceHolder(R.drawable.ic_error_black_24dp, R.drawable.ic_error_black_24dp)
+                .load(Uri.parse(item.flag), flag)
         }
     }
 }

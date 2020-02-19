@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var vm: CountriesViewModel
 
     private var countriesList = arrayListOf<Country>()
-    private lateinit var adapter: CountryListAdapter
+    //  private lateinit var adapter: CountryListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,25 +39,31 @@ class MainActivity : AppCompatActivity() {
         vm.getCountries()
 
 
+//
+//        vm.countries.observe(this, Observer { countries ->
+//            Log.d("tutututu", countries.size.toString())
+//            for (country in countries) {
+//                countriesList.add(country)
+//            }
+//        })
 
-        vm.countries.observe(this, Observer { countries ->
-            for (country in countries) {
-                countriesList.add(country)
-            }
-        })
 
         // Show recyclerView
-        recyclerView.also {
-            it.layoutManager = LinearLayoutManager(this)
-            it.setHasFixedSize(true)
-            it.adapter = CountryListAdapter(countriesList)
-            adapter = CountryListAdapter(countriesList)
+        recyclerView.also { recyclerView ->
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            recyclerView.setHasFixedSize(true)
+            //recyclerView.adapter = CountryListAdapter(countriesList)
+
+            vm.countries.observe(this, Observer {
+                recyclerView.adapter = CountryListAdapter(it)
+            })
+
             //adapter.setUsers(countriesList)
             //it.addOnItemTouchListener(RecyclerItemClickListener(this, it, this))
 
 
-            it.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
         }
     }
 

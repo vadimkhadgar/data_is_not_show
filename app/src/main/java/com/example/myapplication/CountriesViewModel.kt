@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,6 +23,7 @@ class CountriesViewModel(private val repository: CountriesRepository) : ViewMode
             { repository.getCountries() },
             { _countries.value = it }
         )
+        Log.d("tutututut", countries.toString())
     }
 
     override fun onCleared() {
